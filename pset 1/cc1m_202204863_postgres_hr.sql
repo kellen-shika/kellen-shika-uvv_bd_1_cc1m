@@ -197,3 +197,55 @@ REFERENCES hr.empregados (id_empregado)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
+SELECT
+'INSERT INTO regioes (id_regiao_, nome) VALUES
+(' || region_id || ', ''' || region_name || ');'
+FROM regions;
+
+SELECT
+'INSERT INTO departamentos (id_departamento, nome, id_localizacao, id_gerente) VALUES
+(' || department_id || ', ''' || department_name || ', ' ||
+ || ''', ''' || location_id  || ''', ''' ||
+manager_id || ');'
+FROM departments;
+
+SELECT
+'INSERT INTO localizacoes (id_localizacao, endereco, cidade, CEP,  uf, id_pais) VALUES
+(' || location_id || ', ''' || street_address || ', ' ||
+city || ''', ''' || postal_code || ''', ''' ||
+state_province || ''', ''' || country_id || ');'
+FROM locations;
+
+SELECT
+'INSERT INTO cargos ( id_cargo, cargo, salario_minimo, salario_maximmo) VALUES
+(' || job_id  || ', ''' || job_title || ' ,''' ||
+min_salary || ''', ''' || max_salary ||  ');'
+FROM jobs;
+
+SELECT
+'INSERT INTO historico_cargos ( id_empregado, data_inical, data_final, id_cargo, d_departamento ) VALUES
+(' || employee_id || ', ''' ||
+TO_CHAR(start_date, 'YYYY-MM-DD') || ' ,''' ||
+TO_CHAR(end_date, 'YYYY-MM-DD') || ''', ''' || job_id  || ''', ''' || department_id, 'null') || ');'
+FROM job_history;
+
+SELECT
+'INSERT INTO empregados (id_empregado, nome, email,
+telefone, data_contratacao, id_cargo, salario,
+comissao, id_supervisor, id_departamento) VALUES
+(' || employee_id || ', ''' || first_name || ' ' ||
+last_name || ''', ''' || email || ''', ''' ||
+phone_number || ''', ''' ||
+TO_CHAR(hire_date, 'YYYY-MM-DD') || ', ''' ||
+job_id || ''', ' || salary || ', ' ||
+NVL(TO_CHAR(commission_pct), 'null') || ', ' ||
+NVL(TO_CHAR(manager_id), 'null') || ', ' ||
+NVL(TO_CHAR(department_id), 'null') || ');'
+FROM employees;
+
+SELECT
+'INSERT INTO paises ( _id_pais_, nome, id_regiao) VALUES
+(' || country_id || ', ''' || country_name || ', ''' ||
+region_id || ');'
+FROM countries;
