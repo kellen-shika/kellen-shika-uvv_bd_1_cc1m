@@ -8,8 +8,8 @@ CREATE TABLE hr.cargos (
 );
 COMMENT ON TABLE hr.cargos IS 'tabela com o cargo e salario minimo e maximo';
 COMMENT ON COLUMN hr.cargos.id_cargo IS 'chave primaria, codigo do cargo';
-COMMENT ON COLUMN hr.cargos.salario_minimo IS 'o menor salário';
-COMMENT ON COLUMN hr.cargos.salario_maximmo IS 'o maior sálario';
+COMMENT ON COLUMN hr.cargos.salario_minimo IS 'o menor salario';
+COMMENT ON COLUMN hr.cargos.salario_maximmo IS 'o maior salario';
 
 
 CREATE UNIQUE INDEX cargos_idx
@@ -22,8 +22,8 @@ CREATE TABLE hr.regioes (
                 CONSTRAINT id_regiao PRIMARY KEY (id_regiao_)
 );
 COMMENT ON TABLE hr.regioes IS 'cotem a regiao';
-COMMENT ON COLUMN hr.regioes.id_regiao_ IS 'chave prímaria da tabela regiões, contém codigo da região';
-COMMENT ON COLUMN hr.regioes.nome IS 'nome da região';
+COMMENT ON COLUMN hr.regioes.id_regiao_ IS 'chave primaria da tabela regioes, contem codigo da regiao';
+COMMENT ON COLUMN hr.regioes.nome IS 'nome da regiao';
 
 
 CREATE UNIQUE INDEX regioes_idx
@@ -36,10 +36,10 @@ CREATE TABLE hr.paises (
                 id_regiao INTEGER NOT NULL,
                 CONSTRAINT id_pais PRIMARY KEY (_id_pais_)
 );
-COMMENT ON TABLE hr.paises IS 'detalha qual o país, qual é sua sigla e em que regiao está';
-COMMENT ON COLUMN hr.paises._id_pais_ IS 'chave prímaria da tabela países, sigla do país';
+COMMENT ON TABLE hr.paises IS 'detalha qual o pais, qual e sua sigla e a regiao ';
+COMMENT ON COLUMN hr.paises._id_pais_ IS 'chave primaria da tabela paises, sigla do pais';
 COMMENT ON COLUMN hr.paises.nome IS 'nome do pais';
-COMMENT ON COLUMN hr.paises.id_regiao IS 'chave estregereira da tabela regiões do código das regiões';
+COMMENT ON COLUMN hr.paises.id_regiao IS 'chave estregereira da tabela regioes do codigo das regioes';
 
 
 CREATE UNIQUE INDEX paises_idx
@@ -55,13 +55,13 @@ CREATE TABLE hr.localizacoes (
                 id_pais CHAR(2) NOT NULL,
                 CONSTRAINT id_localizacao PRIMARY KEY (id_localizacao)
 );
-COMMENT ON TABLE hr.localizacoes IS 'tem os detalhes da localização de escritórios e facilidades da empresa, não clientes.';
-COMMENT ON COLUMN hr.localizacoes.id_localizacao IS 'chave prímaria da tabela localizaçoes, contém o código da localização';
-COMMENT ON COLUMN hr.localizacoes.endereco IS 'o endereço (rua, bairro e numero)';
+COMMENT ON TABLE hr.localizacoes IS 'tem os detalhes da localizacao de escritorios e facilidades da empresa, nao clientes.';
+COMMENT ON COLUMN hr.localizacoes.id_localizacao IS 'chave primaria da tabela localizacoes, contem o codigo da localizacao';
+COMMENT ON COLUMN hr.localizacoes.endereco IS 'o endereco (rua, bairro e numero)';
 COMMENT ON COLUMN hr.localizacoes.cidade IS 'a ciddade';
-COMMENT ON COLUMN hr.localizacoes.CEP IS 'o cep da localização';
-COMMENT ON COLUMN hr.localizacoes.uf IS 'a unidade federal da localização';
-COMMENT ON COLUMN hr.localizacoes.id_pais IS 'chave estrangeira para a tabela países, tem o código do país';
+COMMENT ON COLUMN hr.localizacoes.CEP IS 'o cep da localizacao';
+COMMENT ON COLUMN hr.localizacoes.uf IS 'a unidade federal da localizacao';
+COMMENT ON COLUMN hr.localizacoes.id_pais IS 'chave estrangeira para a tabela paises, tem o codigo do pais';
 
 
 CREATE TABLE hr.departamentos (
@@ -71,11 +71,11 @@ CREATE TABLE hr.departamentos (
                 id_gerente INTEGER NOT NULL,
                 CONSTRAINT id_departamento PRIMARY KEY (id_departamento)
 );
-COMMENT ON TABLE hr.departamentos IS 'tem o código do departamento, seu nome, a localização e quem o gerencia';
-COMMENT ON COLUMN hr.departamentos.id_departamento IS 'chave prímaria da tabela departamentos, contém o código do departamento';
+COMMENT ON TABLE hr.departamentos IS 'tem o codigo do departamento, seu nome, a localizacao e quem o gerencia';
+COMMENT ON COLUMN hr.departamentos.id_departamento IS 'chave primaria da tabela departamentos, contem o codigo do departamento';
 COMMENT ON COLUMN hr.departamentos.nome IS 'nome do departamentento';
-COMMENT ON COLUMN hr.departamentos.id_localizacao IS 'chave estrangeira para a tabela localizações, tem o código da localizaçao';
-COMMENT ON COLUMN hr.departamentos.id_gerente IS 'chave primária da tabela empregados, com a identificação do empregado';
+COMMENT ON COLUMN hr.departamentos.id_localizacao IS 'chave estrangeira para a tabela localizacoes, tem o codigo da localizacao';
+COMMENT ON COLUMN hr.departamentos.id_gerente IS 'chave primï¿½ria da tabela empregados, com a identificacao do empregado';
 
 
 CREATE UNIQUE INDEX departamentos_idx
@@ -95,16 +95,16 @@ CREATE TABLE hr.empregados (
                 id_surpevisor INTEGER NOT NULL,
                 CONSTRAINT id_empregado PRIMARY KEY (id_empregado)
 );
-COMMENT ON TABLE hr.empregados IS 'tem o código do empregado, nome, email, telefone, quando foi contratado, cargo, salário, comissão, departamento, e o surpevisor';
-COMMENT ON COLUMN hr.empregados.id_empregado IS 'chave primária da tabela empregados, com a identificação do empregado';
+COMMENT ON TABLE hr.empregados IS 'tem o codigo do empregado, nome, email, telefone, quando foi contratado, cargo, salario, comissao, departamento, e o surpevisor';
+COMMENT ON COLUMN hr.empregados.id_empregado IS 'chave primaria da tabela empregados, com a identificacao do empregado';
 COMMENT ON COLUMN hr.empregados.nome IS 'nome do empregado';
 COMMENT ON COLUMN hr.empregados.email IS 'email do empregado antes de @';
-COMMENT ON COLUMN hr.empregados.telefone IS 'número de telefone, com o dodigo do país e estado';
+COMMENT ON COLUMN hr.empregados.telefone IS 'numero de telefone, com o dodigo do pais e estado';
 COMMENT ON COLUMN hr.empregados.data_contratacao IS 'quando o empregado iniciou no cargo atual';
 COMMENT ON COLUMN hr.empregados.id_carg0 IS 'chave estrangeira da tabela cargos, idenetifica os cargos';
-COMMENT ON COLUMN hr.empregados.salario IS 'sálario do empragado';
-COMMENT ON COLUMN hr.empregados.comissao IS 'quanto o empregado ganhou de comissão, apenas dsponivel para o departamento de vendas';
-COMMENT ON COLUMN hr.empregados.id_departamento IS 'chave estrangeira, contém código do departamento';
+COMMENT ON COLUMN hr.empregados.salario IS 'sï¿½lario do empragado';
+COMMENT ON COLUMN hr.empregados.comissao IS 'quanto o empregado ganhou de comissao, apenas dsponivel para o departamento de vendas';
+COMMENT ON COLUMN hr.empregados.id_departamento IS 'chave estrangeira, contem codigo do departamento';
 COMMENT ON COLUMN hr.empregados.id_surpevisor IS 'o surpervisor direto do empregdo (auto-relacionamento)';
 
 
@@ -120,12 +120,12 @@ CREATE TABLE hr.historico_cargos (
                 d_departamento INTEGER NOT NULL,
                 CONSTRAINT data_inicial PRIMARY KEY (id_empregado, data_inical)
 );
-COMMENT ON TABLE hr.historico_cargos IS 'contém o código do empregado, quando ele começou, quando teminou no cargo e em qual departamento';
-COMMENT ON COLUMN hr.historico_cargos.id_empregado IS 'chave primária da tabela empregados, com a identificação do empregado';
-COMMENT ON COLUMN hr.historico_cargos.data_inical IS 'chave primária composta, contém quando iniciou o cargo';
+COMMENT ON TABLE hr.historico_cargos IS 'contem o codigo do empregado, quando ele comecou, quando teminou no cargo e em qual departamento';
+COMMENT ON COLUMN hr.historico_cargos.id_empregado IS 'chave primaria da tabela empregados, com a identificaao do empregado';
+COMMENT ON COLUMN hr.historico_cargos.data_inical IS 'chave primaria composta, contem quando iniciou o cargo';
 COMMENT ON COLUMN hr.historico_cargos.data_final IS 'quando o empregado deixou o cargo';
 COMMENT ON COLUMN hr.historico_cargos.id_cargo IS 'chave estrangeira para cargos, indentica o cargo';
-COMMENT ON COLUMN hr.historico_cargos.d_departamento IS 'chave estrageira para departamentos, tem código do departamento';
+COMMENT ON COLUMN hr.historico_cargos.d_departamento IS 'chave estrageira para departamentos, tem codigo do departamento';
 
 
 ALTER TABLE hr.empregados ADD CONSTRAINT cargos_empregados_fk
