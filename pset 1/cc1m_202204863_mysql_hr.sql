@@ -1,3 +1,8 @@
+CREATE USER 'rayssa'@'localhost' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON 'root' TO 'rayssa'@'localhost';
+FLUSH PRIVILEGES;
+
+CREATE DATABASE uvv
 
 CREATE TABLE cargos (
                 id_cargo VARCHAR(10) NOT NULL,
@@ -11,9 +16,9 @@ ALTER TABLE cargos COMMENT 'tabela com o cargo e salario minimo e maximo';
 
 ALTER TABLE cargos MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'chave primaria, codigo do cargo';
 
-ALTER TABLE cargos MODIFY COLUMN salario_minimo DECIMAL(8, 2) COMMENT 'o menor salário';
+ALTER TABLE cargos MODIFY COLUMN salario_minimo DECIMAL(8, 2) COMMENT 'o menor salario';
 
-ALTER TABLE cargos MODIFY COLUMN salario_maximmo DECIMAL(8, 2) COMMENT 'o maior sálario';
+ALTER TABLE cargos MODIFY COLUMN salario_maximmo DECIMAL(8, 2) COMMENT 'o maior salario';
 
 
 CREATE UNIQUE INDEX cargos_idx
@@ -28,9 +33,9 @@ CREATE TABLE regioes (
 
 ALTER TABLE regioes COMMENT 'cotem a regiao';
 
-ALTER TABLE regioes MODIFY COLUMN id_regiao_ INTEGER COMMENT 'chave prímaria da tabela regiões, contém codigo da região';
+ALTER TABLE regioes MODIFY COLUMN id_regiao_ INTEGER COMMENT 'chave primaria da tabela regioes, contem codigo da regiao';
 
-ALTER TABLE regioes MODIFY COLUMN nome VARCHAR(25) COMMENT 'nome da região';
+ALTER TABLE regioes MODIFY COLUMN nome VARCHAR(25) COMMENT 'nome da regiao';
 
 
 CREATE UNIQUE INDEX regioes_idx
@@ -44,13 +49,13 @@ CREATE TABLE paises (
                 PRIMARY KEY (_id_pais_)
 );
 
-ALTER TABLE paises COMMENT 'detalha qual o país, qual é sua sigla e em que regiao está';
+ALTER TABLE paises COMMENT 'detalha qual o pais, regiao e a sigla';
 
-ALTER TABLE paises MODIFY COLUMN _id_pais_ CHAR(2) COMMENT 'chave prímaria da tabela países, sigla do país';
+ALTER TABLE paises MODIFY COLUMN _id_pais_ CHAR(2) COMMENT 'chave primaria da tabela paises, sigla do pais';
 
 ALTER TABLE paises MODIFY COLUMN nome VARCHAR(50) COMMENT 'nome do pais';
 
-ALTER TABLE paises MODIFY COLUMN id_regiao INTEGER COMMENT 'chave estregereira da tabela regiões do código das regiões';
+ALTER TABLE paises MODIFY COLUMN id_regiao INTEGER COMMENT 'chave estregereira da tabela regioes do codigo das regioes';
 
 
 CREATE UNIQUE INDEX paises_idx
@@ -67,19 +72,19 @@ CREATE TABLE localizacoes (
                 PRIMARY KEY (id_localizacao)
 );
 
-ALTER TABLE localizacoes COMMENT 'tem os detalhes da localização de escritórios e facilidades da empresa, não clientes.';
+ALTER TABLE localizacoes COMMENT 'tem os detalhes da localizacao de escritorios e facilidades da empresa, nao clientes.';
 
-ALTER TABLE localizacoes MODIFY COLUMN id_localizacao INTEGER COMMENT 'calização';
+ALTER TABLE localizacoes MODIFY COLUMN id_localizacao INTEGER COMMENT 'localizacao';
 
-ALTER TABLE localizacoes MODIFY COLUMN endereco VARCHAR(50) COMMENT 'o endereço (rua, bairro e numero)';
+ALTER TABLE localizacoes MODIFY COLUMN endereco VARCHAR(50) COMMENT 'o endereco (rua, bairro e numero)';
 
 ALTER TABLE localizacoes MODIFY COLUMN cidade VARCHAR(50) COMMENT 'a ciddade';
 
-ALTER TABLE localizacoes MODIFY COLUMN CEP VARCHAR(12) COMMENT 'o cep da localização';
+ALTER TABLE localizacoes MODIFY COLUMN CEP VARCHAR(12) COMMENT 'o cep da localizacao';
 
-ALTER TABLE localizacoes MODIFY COLUMN uf VARCHAR(25) COMMENT 'a unidade federal da localização';
+ALTER TABLE localizacoes MODIFY COLUMN uf VARCHAR(25) COMMENT 'a unidade federal da localizacao';
 
-ALTER TABLE localizacoes MODIFY COLUMN id_pais CHAR(2) COMMENT 'chave estrangeira para a tabela países, tem o código do país';
+ALTER TABLE localizacoes MODIFY COLUMN id_pais CHAR(2) COMMENT 'chave estrangeira para a tabela paises, tem o codigo do pais';
 
 
 CREATE TABLE departamentos (
@@ -90,13 +95,13 @@ CREATE TABLE departamentos (
                 PRIMARY KEY (id_departamento)
 );
 
-ALTER TABLE departamentos COMMENT 'tem o código do departamento, seu nome, a localização e quem o gerencia';
+ALTER TABLE departamentos COMMENT 'tem o codigo do departamento, seu nome, a localizacao e quem o gerencia';
 
-ALTER TABLE departamentos MODIFY COLUMN id_departamento INTEGER COMMENT 'epartamento';
+ALTER TABLE departamentos MODIFY COLUMN id_departamento INTEGER COMMENT 'departamento';
 
 ALTER TABLE departamentos MODIFY COLUMN nome VARCHAR(50) COMMENT 'nome do departamentento';
 
-ALTER TABLE departamentos MODIFY COLUMN id_localizacao INTEGER COMMENT 'a localizaçao';
+ALTER TABLE departamentos MODIFY COLUMN id_localizacao INTEGER COMMENT 'a localizacao';
 
 ALTER TABLE departamentos MODIFY COLUMN id_gerente INTEGER COMMENT 'empregado';
 
@@ -119,7 +124,7 @@ CREATE TABLE empregados (
                 PRIMARY KEY (id_empregado)
 );
 
-ALTER TABLE empregados COMMENT 'tem o código do empregado, nome, email, telefone, quando foi contratado, cargo, salário, comissão, departamento, e o surpevisor';
+ALTER TABLE empregados COMMENT 'tem o codigo do empregado, nome, email, telefone, quando foi contratado, cargo, salario, comissao, departamento, e o surpevisor';
 
 ALTER TABLE empregados MODIFY COLUMN id_empregado INTEGER COMMENT 'empregado';
 
@@ -127,17 +132,17 @@ ALTER TABLE empregados MODIFY COLUMN nome VARCHAR(75) COMMENT 'nome do empregado
 
 ALTER TABLE empregados MODIFY COLUMN email VARCHAR(35) COMMENT 'email do empregado antes de @';
 
-ALTER TABLE empregados MODIFY COLUMN telefone VARCHAR(20) COMMENT 'número de telefone, com o dodigo do país e estado';
+ALTER TABLE empregados MODIFY COLUMN telefone VARCHAR(20) COMMENT 'numero de telefone, com o dodigo do pais e estado';
 
 ALTER TABLE empregados MODIFY COLUMN data_contratacao DATE COMMENT 'quando o empregado iniciou no cargo atual';
 
 ALTER TABLE empregados MODIFY COLUMN id_carg0 VARCHAR(10) COMMENT 'chave estrangeira da tabela cargos, idenetifica os cargos';
 
-ALTER TABLE empregados MODIFY COLUMN salario DECIMAL(8, 2) COMMENT 'sálario do empragado';
+ALTER TABLE empregados MODIFY COLUMN salario DECIMAL(8, 2) COMMENT 'salario do empragado';
 
 ALTER TABLE empregados MODIFY COLUMN comissao DECIMAL(4, 2) COMMENT ' o departamento de vendas';
 
-ALTER TABLE empregados MODIFY COLUMN id_departamento INTEGER COMMENT 'chave estrangeira, contém código do departamento';
+ALTER TABLE empregados MODIFY COLUMN id_departamento INTEGER COMMENT 'chave estrangeira, contem codigo do departamento';
 
 ALTER TABLE empregados MODIFY COLUMN id_surpevisor INTEGER COMMENT 'o surpervisor direto do empregdo (auto-relacionamento)';
 
@@ -155,17 +160,17 @@ CREATE TABLE historico_cargos (
                 PRIMARY KEY (id_empregado, data_inical)
 );
 
-ALTER TABLE historico_cargos COMMENT 'contém o código do empregado, quando ele começou, quando teminou no cargo e em qual departamento';
+ALTER TABLE historico_cargos COMMENT 'contem o codigo do empregado, quando ele comecou, quando teminou no cargo e em qual departamento';
 
 ALTER TABLE historico_cargos MODIFY COLUMN id_empregado INTEGER COMMENT 'empregado';
 
-ALTER TABLE historico_cargos MODIFY COLUMN data_inical DATE COMMENT 'chave primária composta, contém quando iniciou o cargo';
+ALTER TABLE historico_cargos MODIFY COLUMN data_inical DATE COMMENT 'chave primaria composta, contem quando iniciou o cargo';
 
 ALTER TABLE historico_cargos MODIFY COLUMN data_final DATE COMMENT 'quando o empregado deixou o cargo';
 
 ALTER TABLE historico_cargos MODIFY COLUMN id_cargo VARCHAR(10) COMMENT 'chave estrangeira para cargos, indentica o cargo';
 
-ALTER TABLE historico_cargos MODIFY COLUMN d_departamento INTEGER COMMENT 'nto';
+ALTER TABLE historico_cargos MODIFY COLUMN d_departamento INTEGER COMMENT 'nome do departamento';
 
 
 ALTER TABLE empregados ADD CONSTRAINT cargos_empregados_fk
@@ -227,3 +232,70 @@ FOREIGN KEY (id_surpevisor)
 REFERENCES empregados (id_empregado)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
+ALTER TABLE hr.empregados ADD CONSTRAINT empregados_empregados_fk
+FOREIGN KEY (id_surpevisor)
+REFERENCES hr.empregados (id_empregado)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+SELECT
+INSERT INTO regioes (id_regiao_, nome) VALUES
+( || region_id || ', ''' || region_name || );
+FROM regions;
+
+SELECT
+INSERT INTO departamentos (id_departamento, nome, id_localizacao, id_gerente) VALUES
+( || NVL(TO_CHAR(department_id)), 'not null' || ', ''' || 
+NVL(TO_CHAR(department_name), 'null' || ', ' ||
+ || ''', ''' || location_id  || ''', ''' ||
+manager_id || );
+FROM departments;
+
+SELECT
+INSERT INTO localizacoes (id_localizacao, endereco, cidade, CEP,  uf, id_pais) VALUES
+(|| location_id || ', ''' || 
+NVL(TO_CHAR(street_address)), 'null' || ', ' ||
+city || ''', ''' || postal_code || ''', ''' ||
+state_province || ''', ''' || country_id || );
+FROM locations;
+
+SELECT
+INSERT INTO cargos ( id_cargo, cargo, salario_minimo, salario_maximmo) VALUES
+( || job_id  || ', ''' || job_title || ' ,''' ||
+ MIN(min_salary) || ''', ''' || 
+ MAX(max_salary) ||  );
+FROM jobs;
+
+SELECT
+INSERT INTO historico_cargos ( id_empregado, data_inical, data_final, id_cargo, d_departamento ) VALUES
+(|| employee_id || ', ''' ||
+NVL(TO_CHAR(start_date, 'YYYY-MM-DD')), 'not null' || ' ,''' ||
+NVL(TO_CHAR(end_date, 'YYYY-MM-DD')), 'not null' || ''', ''' || job_id  
+|| ''', ''' || department_id, 'null') || );
+FROM job_history;
+
+SELECT
+INSERT INTO empregados (id_empregado, nome, email,
+telefone, data_contratacao, id_cargo, salario,
+comissao, id_supervisor, id_departamento) VALUES
+( || employee_id || ', ''' || first_name || ' ' ||
+last_name || ''', ''' || email || ''', ''' ||
+phone_number || ''', ''' ||
+NVL(TO_CHAR(hire_date, 'YYYY-MM-DD')) || ', ''' ||
+job_id || ''', ' || salary || ', ' ||
+NVL(TO_CHAR(commission_pct), 'null') || ', ' ||
+NVL(TO_CHAR(manager_id), 'null') || ', ' ||
+NVL(TO_CHAR(department_id), 'null') || );
+FROM employees;
+
+SELECT
+INSERT INTO paises ( _id_pais_, nome, id_regiao) VALUES
+(|| country_id || ', ''' ||
+NVL(TO_CHAR( country_name ), 'null')|| ', ''' ||
+region_id || );
+FROM countries;
+
+ALTER USER root;
+GRANT ALL PRIVILEGES ON 'rayssa'@'localhost' TO 'root';
+FLUSH PRIVILEGES;
