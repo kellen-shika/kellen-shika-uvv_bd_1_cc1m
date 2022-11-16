@@ -1,4 +1,4 @@
-CREATE ROLE rayssa WITH
+CREATE USER rayssa WITH
 	LOGIN
 	SUPERUSER
 	CREATEDB
@@ -8,19 +8,17 @@ CREATE ROLE rayssa WITH
 	CONNECTION LIMIT -1;
 
 CREATE DATABASE uvv
-    WITH
+WITH
     OWNER = rayssa
     ENCODING = 'UTF8'
-    LC_COLLATE = 'Portuguese_Brazil.1252'
-    LC_CTYPE = 'Portuguese_Brazil.1252'
+    LC_COLLATE = 'pt_BR.UTF-8'
+    LC_CTYPE = 'pt_BR.UTF-8'
     TABLESPACE = pg_default
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
+	ALLOW_CONNECTIONS = TRUE;
 
 CREATE SCHEMA hr
-    AUTHORIZATION rayssa;
+AUTHORIZATION rayssa;
 
-ALTER USER rayssa
 SET SEARCH_PATH TO hr, "$user", public;
 
 CREATE TABLE hr.cargos (
@@ -223,59 +221,59 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 INSERT INTO hr.regioes (id_regiao_, nome) VALUES
-( || region_id || ', ''' || region_name || )
+(region_id || ', ''' || region_name  )
 FROM regions
 WHERE region_id, region_name IS NOT NULL;
 
 INSERT INTO hr.departamentos (id_departamento, nome, id_localizacao, id_gerente) VALUES
-( ||department_id || ', ''' || 
+( department_id || ', ''' || 
 department_name || ', ' ||
- || ''', ''' || location_id  || ''', ''' ||
-manager_id || )
+ location_id  || ''', ''' ||
+manager_id )
 FROM departments
 WHERE department_id, location_id, manager_id IS NOT NULL;
 
 INSERT INTO hr.localizacoes (id_localizacao, endereco, cidade, CEP,  uf, id_pais) VALUES
-(|| location_id || ', ''' || 
+( location_id || ', ''' || 
 street_address || ', ' ||
 city || ''', ''' || postal_code || ''', ''' ||
-state_province || ''', ''' || country_id || )
+state_province || ''', ''' || country_id )
 FROM locations
 WHERE location_id, country_id IS NOT NULL;
 
 INSERT INTO hr.cargos ( id_cargo, cargo, salario_minimo, salario_maximmo) VALUES
-( || job_id  || ', ''' || job_title || ' ,''' ||
+( job_id  || ', ''' || job_title || ' ,''' ||
  MIN(min_salary) || ''', ''' || 
- MAX(max_salary) ||  )
+ MAX(max_salary) )
 FROM jobs
 WHERE job_id, job_title IS NOT NULL;
 
 INSERT INTO hr.historico_cargos ( id_empregado, data_inical, data_final, id_cargo, d_departamento ) VALUES
-(|| employee_id || ', ''' ||
+( employee_id || ', ''' ||
 TO_DATE(start_date, 'YYYY-MM-DD') || ' ,''' ||
 TO_DATE(end_date, 'YYYY-MM-DD') || ''', ''' || job_id  
-|| ''', ''' || department_id,  || )
+|| ''', ''' || department_id )
 FROM job_history
 WHERE employee_id, start_date, end_date, job_id, department_id IS NOT NULL;
 
 INSERT INTO hr.empregados (id_empregado, nome, email,
 telefone, data_contratacao, id_cargo, salario,
 comissao, id_supervisor, id_departamento) VALUES
-( || employee_id || ', ''' || first_name || ' ' ||
+( employee_id || ', ''' || first_name || ' ' ||
 last_name || ''', ''' || email || ''', ''' ||
 phone_number || ''', ''' ||
 TO_DATE(hire_date, 'YYYY-MM-DD') || ', ''' ||
 job_id || ''', ' || salary || ', ' ||
 commission_pct || ', ' ||
 manager_id || ', ' ||
-department_id || )
+department_id  )
 FROM employees
 WHERE employee_id, first_name, email, hire_date, job_id, department_id, manager_id IS NOT NULL;
 
 INSERT INTO hr.paises ( _id_pais_, nome, id_regiao) VALUES
-(|| country_id || ', ''' ||
+(country_id || ', ''' ||
  country_name || ', ''' ||
-region_id || )
+region_id  )
 FROM countries
 WHERE country_id, country_name, region_id IS NOT NULL;
 
