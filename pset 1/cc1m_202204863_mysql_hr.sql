@@ -232,69 +232,63 @@ FOREIGN KEY (id_surpevisor)
 REFERENCES empregados (id_empregado)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
-ALTER TABLE hr.empregados ADD CONSTRAINT empregados_empregados_fk
-FOREIGN KEY (id_surpevisor)
-REFERENCES hr.empregados (id_empregado)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
 
-SELECT
 INSERT INTO regioes (id_regiao_, nome) VALUES
-( || region_id || ', ''' || region_name || );
-FROM regions;
+( || region_id|| ', ''' || IFNULL(region_name, 'null') || )
+FROM regions
+WHERE region_id IS NOT NULL;
 
-SELECT
 INSERT INTO departamentos (id_departamento, nome, id_localizacao, id_gerente) VALUES
-( || NVL(TO_CHAR(department_id)), 'not null' || ', ''' || 
-NVL(TO_CHAR(department_name), 'null' || ', ' ||
- || ''', ''' || location_id  || ''', ''' ||
-manager_id || );
-FROM departments;
+( ||department_id || ', ''' || 
+department_name || ', ' ||
+ || ''', ''' || IFNULL(location_id, 'null')  || ''', ''' ||
+IFNULL(manager_id, 'null') || )
+FROM departments
+WHERE department_id IS NOT NULL;
 
-SELECT
 INSERT INTO localizacoes (id_localizacao, endereco, cidade, CEP,  uf, id_pais) VALUES
-(|| location_id || ', ''' || 
-NVL(TO_CHAR(street_address)), 'null' || ', ' ||
+(|| location_id|| ', ''' || 
+street_address|| ', ' ||
 city || ''', ''' || postal_code || ''', ''' ||
-state_province || ''', ''' || country_id || );
-FROM locations;
+state_province || ''', ''' || IFNULL(country_id, 'null') || );
+FROM locations
+WHERE location_id IS NOT NULL;
 
-SELECT
 INSERT INTO cargos ( id_cargo, cargo, salario_minimo, salario_maximmo) VALUES
-( || job_id  || ', ''' || job_title || ' ,''' ||
+( || job_id || ', ''' || IFNULL(job_title, 'null') || ' ,''' ||
  MIN(min_salary) || ''', ''' || 
- MAX(max_salary) ||  );
-FROM jobs;
+ MAX(max_salary) ||  )
+FROM jobs
+WHERE job_id IS NOT NULL;
 
-SELECT
 INSERT INTO historico_cargos ( id_empregado, data_inical, data_final, id_cargo, d_departamento ) VALUES
 (|| employee_id || ', ''' ||
-NVL(TO_CHAR(start_date, 'YYYY-MM-DD')), 'not null' || ' ,''' ||
-NVL(TO_CHAR(end_date, 'YYYY-MM-DD')), 'not null' || ''', ''' || job_id  
-|| ''', ''' || department_id, 'null') || );
-FROM job_history;
+DATE_FORMAT(start_date, '%Y-% M-%D') || ' ,''' ||
+IFNULL(DATE_FORMAT(end_date, '%Y-% M-%D'), 'null') || ''', ''' || IFNULL(job_id, 'null') 
+|| ''', ''' || IFNULL(department_id, 'null') || )
+FROM job_history
+WHERE employee_id, start_date IS NOT NULL;
 
-SELECT
 INSERT INTO empregados (id_empregado, nome, email,
 telefone, data_contratacao, id_cargo, salario,
 comissao, id_supervisor, id_departamento) VALUES
-( || employee_id || ', ''' || first_name || ' ' ||
-last_name || ''', ''' || email || ''', ''' ||
+( || employee_id || ', ''' || IFNULL(first_name || ' ' ||
+last_name, 'null') || ''', ''' || IFNULL(email, 'null') || ''', ''' ||
 phone_number || ''', ''' ||
-NVL(TO_CHAR(hire_date, 'YYYY-MM-DD')) || ', ''' ||
-job_id || ''', ' || salary || ', ' ||
-NVL(TO_CHAR(commission_pct), 'null') || ', ' ||
-NVL(TO_CHAR(manager_id), 'null') || ', ' ||
-NVL(TO_CHAR(department_id), 'null') || );
-FROM employees;
+IFNULL(DATE_FORMAT(hire_date, '%Y-% M-%D'), 'null') || ', ''' ||
+IFNULL(job_id, 'null') || ''', ' || salary || ', ' ||
+IFNULL(commission_pct, 'null') || ', ' ||
+IFNULL(manager_id, 'null') || ', ' ||
+IFNULL(department_id, 'null') || )
+FROM employees
+WHERE employee_id IS NOT NULL;
 
-SELECT
 INSERT INTO paises ( _id_pais_, nome, id_regiao) VALUES
 (|| country_id || ', ''' ||
-NVL(TO_CHAR( country_name ), 'null')|| ', ''' ||
-region_id || );
-FROM countries;
+IFNULL( country_name , 'null')|| ', ''' ||
+IFNULL(region_id, 'null' || )
+FROM countries
+WHERE country_id IS NOT NULL;
 
 ALTER USER root;
 GRANT ALL PRIVILEGES ON 'rayssa'@'localhost' TO 'root';

@@ -223,7 +223,7 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 INSERT INTO hr.regioes (id_regiao_, nome) VALUES
-( || region_id || ', ''' || region_name || );
+( || region_id || ', ''' || region_name || )
 FROM regions
 WHERE region_id, region_name IS NOT NULL;
 
@@ -231,7 +231,7 @@ INSERT INTO hr.departamentos (id_departamento, nome, id_localizacao, id_gerente)
 ( ||department_id || ', ''' || 
 department_name || ', ' ||
  || ''', ''' || location_id  || ''', ''' ||
-TO_CHAR(manager_id) || );
+manager_id || )
 FROM departments
 WHERE department_id, location_id, manager_id IS NOT NULL;
 
@@ -239,14 +239,14 @@ INSERT INTO hr.localizacoes (id_localizacao, endereco, cidade, CEP,  uf, id_pais
 (|| location_id || ', ''' || 
 street_address || ', ' ||
 city || ''', ''' || postal_code || ''', ''' ||
-state_province || ''', ''' || country_id || );
+state_province || ''', ''' || country_id || )
 FROM locations
 WHERE location_id, country_id IS NOT NULL;
 
 INSERT INTO hr.cargos ( id_cargo, cargo, salario_minimo, salario_maximmo) VALUES
 ( || job_id  || ', ''' || job_title || ' ,''' ||
  MIN(min_salary) || ''', ''' || 
- MAX(max_salary) ||  );
+ MAX(max_salary) ||  )
 FROM jobs
 WHERE job_id, job_title IS NOT NULL;
 
@@ -254,7 +254,7 @@ INSERT INTO hr.historico_cargos ( id_empregado, data_inical, data_final, id_carg
 (|| employee_id || ', ''' ||
 TO_DATE(start_date, 'YYYY-MM-DD') || ' ,''' ||
 TO_DATE(end_date, 'YYYY-MM-DD') || ''', ''' || job_id  
-|| ''', ''' || department_id, 'null') || );
+|| ''', ''' || department_id,  || )
 FROM job_history
 WHERE employee_id, start_date, end_date, job_id, department_id IS NOT NULL;
 
@@ -268,14 +268,14 @@ TO_DATE(hire_date, 'YYYY-MM-DD') || ', ''' ||
 job_id || ''', ' || salary || ', ' ||
 commission_pct || ', ' ||
 manager_id || ', ' ||
-department_id || );
+department_id || )
 FROM employees
 WHERE employee_id, first_name, email, hire_date, job_id, department_id, manager_id IS NOT NULL;
 
 INSERT INTO hr.paises ( _id_pais_, nome, id_regiao) VALUES
 (|| country_id || ', ''' ||
  country_name || ', ''' ||
-region_id || );
+region_id || )
 FROM countries
 WHERE country_id, country_name, region_id IS NOT NULL;
 
