@@ -236,39 +236,34 @@ ON UPDATE NO ACTION;
 
 INSERT INTO regioes (id_regiao_, nome) VALUES
 ( region_id|| ', ''' || IFNULL(region_name, 'null') )
-FROM regions
-WHERE region_id IS NOT NULL;
+;
 
 INSERT INTO departamentos (id_departamento, nome, id_localizacao, id_gerente) VALUES
 ( department_id || ', ''' || 
 department_name || ', ' ||
 IFNULL(location_id, 'null')  || ''', ''' ||
 IFNULL(manager_id, 'null') )
-FROM departments
-WHERE department_id IS NOT NULL;
+;
 
 INSERT INTO localizacoes (id_localizacao, endereco, cidade, CEP,  uf, id_pais) VALUES
 ( location_id|| ', ''' || 
 street_address|| ', ' ||
 city || ''', ''' || postal_code || ''', ''' ||
 state_province || ''', ''' || IFNULL(country_id, 'null') )
-FROM locations
-WHERE location_id IS NOT NULL;
+;
 
 INSERT INTO cargos ( id_cargo, cargo, salario_minimo, salario_maximmo) VALUES
 ( job_id || ', ''' || IFNULL(job_title, 'null') || ' ,''' ||
  MIN(min_salary) || ''', ''' || 
  MAX(max_salary) )
-FROM jobs
-WHERE job_id IS NOT NULL;
+;
 
 INSERT INTO historico_cargos ( id_empregado, data_inical, data_final, id_cargo, d_departamento ) VALUES
 (employee_id || ', ''' ||
 DATE_FORMAT(start_date, '%Y-% M-%D') || ' ,''' ||
 IFNULL(DATE_FORMAT(end_date, '%Y-% M-%D'), 'null') || ''', ''' || IFNULL(job_id, 'null') 
 || ''', ''' || IFNULL(department_id, 'null') )
-FROM job_history
-WHERE employee_id, start_date IS NOT NULL;
+;
 
 INSERT INTO empregados (id_empregado, nome, email,
 telefone, data_contratacao, id_cargo, salario,
@@ -281,12 +276,10 @@ IFNULL(job_id, 'null') || ''', ' || salary || ', ' ||
 IFNULL(commission_pct, 'null') || ', ' ||
 IFNULL(manager_id, 'null') || ', ' ||
 IFNULL(department_id, 'null') )
-FROM employees
-WHERE employee_id IS NOT NULL;
+;
 
 INSERT INTO paises ( _id_pais_, nome, id_regiao) VALUES
 (country_id || ', ''' ||
 IFNULL( country_name , 'null')|| ', ''' ||
-IFNULL(region_id, 'null')
-FROM countries
-WHERE country_id IS NOT NULL;
+IFNULL(region_id, 'null'))
+;
